@@ -3,25 +3,371 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-color: #050505;
+  --text-main: #EDEDED;
+  --text-muted: #888888;
+  --accent: #DBFF00;
+  --accent-glow: rgba(219, 255, 0, 0.2);
+  --line-color: rgba(255, 255, 255, 0.12);
+  --window-bg: #0a0a0a;
+  --card-bg: rgba(20, 20, 20, 0.95);
+  --curtain-bg: #050505;
+  --id-bg: rgba(20, 20, 20, 0.8);
+  --grid-color: rgba(255, 255, 255, 0.05);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.light {
+  --bg-color: #EBEBEB;
+  --text-main: #111111;
+  --text-muted: #666666;
+  --accent: #D4A000;
+  --accent-glow: rgba(212, 160, 0, 0.2);
+  --line-color: rgba(0, 0, 0, 0.12);
+  --window-bg: #f5f5f5;
+  --card-bg: rgba(240, 240, 240, 0.95);
+  --curtain-bg: #EBEBEB;
+  --id-bg: rgba(240, 240, 240, 0.8);
+  --grid-color: rgba(0, 0, 0, 0.05);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: 'Satoshi', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@media (pointer: coarse) {
+  body {
+    cursor: auto;
   }
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--bg-color);
+}
+
+/* Grain overlay */
+.grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+}
+
+/* Custom cursor */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;
+}
+
+.cursor-follower {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-follower {
+    display: none;
+  }
+}
+
+/* Preloader */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.preloader-bar {
+  width: 200px;
+  height: 2px;
+  background-color: var(--line-color);
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+.preloader-progress {
+  height: 100%;
+  background-color: var(--accent);
+  width: 0%;
+}
+
+/* Text effects */
+.text-outline {
+  -webkit-text-stroke: 1px var(--text-main);
+  color: transparent;
+  transition: all 0.3s ease;
+}
+
+.text-outline:hover {
+  color: var(--text-main);
+  -webkit-text-stroke: 0px;
+}
+
+/* Scanlines */
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  animation: scanline-move 8s linear infinite;
+}
+
+@keyframes scanline-move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100px;
+  }
+}
+
+/* Card styles */
+.project-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card img {
+  filter: grayscale(100%);
+  transition: filter 0.5s ease;
+}
+
+.project-card:hover img {
+  filter: grayscale(0%);
+}
+
+.project-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+  pointer-events: none;
+}
+
+.project-card:hover {
+  box-shadow: 0 0 30px var(--accent-glow);
+  border-color: var(--accent);
+}
+
+/* Archive card */
+.archive-grid {
+  perspective: 1000px;
+}
+
+.archive-ring {
+  animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Marquee */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: flex;
+  animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Arsenal pills */
+.arsenal-pill {
+  transition: all 0.3s ease;
+}
+
+.arsenal-pill:hover {
+  box-shadow: 0 0 20px var(--accent-glow);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ID Card tilt */
+.id-card {
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease;
+}
+
+/* Horizontal scroll track */
+.works-track {
+  display: flex;
+  gap: 2rem;
+  will-change: transform;
+}
+
+/* Curtain panels */
+.curtain-left,
+.curtain-right {
+  position: fixed;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-color: var(--curtain-bg);
+  z-index: 100;
+}
+
+.curtain-left {
+  left: 0;
+}
+
+.curtain-right {
+  right: 0;
+}
+
+/* Infinite scroll streams */
+.stream-left {
+  animation: stream-scroll-left 30s linear infinite;
+}
+
+.stream-right {
+  animation: stream-scroll-right 30s linear infinite;
+}
+
+@keyframes stream-scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes stream-scroll-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Hide scrollbar for horizontal scroll */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Glitch effect */
+.glitch {
+  position: relative;
+}
+
+.glitch:hover {
+  animation: glitch-effect 0.3s ease;
+}
+
+@keyframes glitch-effect {
+  0%, 100% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+}
+
+/* Link hover underline */
+.link-underline {
+  position: relative;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.link-underline:hover::after {
+  width: 100%;
 }
