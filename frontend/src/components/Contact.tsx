@@ -94,8 +94,8 @@ export default function Contact() {
       </div>
 
       <div className="px-6 md:px-12 lg:px-24">
-        <span className="font-jetbrains text-xs text-text-muted tracking-widest block mb-8">
-          [ GET IN TOUCH ]
+        <span className="font-jetbrains text-xs text-accent tracking-widest px-4 py-2 rounded-full border border-accent/30 inline-block mb-8">
+          04 // GET IN TOUCH
         </span>
 
         {/* Giant Heading */}
@@ -108,15 +108,15 @@ export default function Contact() {
           </h2>
         </div>
 
-        {/* Social Links */}
-        <div className="social-links-container grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+        {/* Social Links - Rounded pill style */}
+        <div className="social-links-container grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl">
           {socialLinks.map((link, index) => (
             <a
               key={index}
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="social-link group flex items-center justify-between p-6 border border-line-color bg-card-bg hover:border-accent transition-all duration-300"
+              className="social-link group flex items-center justify-between p-5 rounded-2xl border border-line-color bg-card-bg hover:border-accent hover:bg-accent/5 transition-all duration-300"
               data-testid={`social-link-${link.name.toLowerCase()}`}
             >
               <div>
@@ -127,19 +127,21 @@ export default function Contact() {
                   {link.handle}
                 </span>
               </div>
-              <svg
-                className="w-6 h-6 text-text-muted group-hover:text-accent group-hover:translate-x-2 transition-all"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
+              <div className="w-10 h-10 rounded-full border border-line-color group-hover:border-accent flex items-center justify-center group-hover:bg-accent/10 transition-all">
+                <svg
+                  className="w-5 h-5 text-text-muted group-hover:text-accent group-hover:translate-x-0.5 transition-all"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </div>
             </a>
           ))}
         </div>
