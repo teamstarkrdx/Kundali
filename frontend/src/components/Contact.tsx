@@ -53,16 +53,16 @@ export default function Contact() {
         });
       }
 
-      // Animate social links
+      // Animate social links - start visible
       gsap.from(".social-link", {
         opacity: 0,
-        x: -50,
+        y: 30,
         stagger: 0.1,
         duration: 0.8,
         ease: "power3.out",
         scrollTrigger: {
           trigger: ".social-links-container",
-          start: "top 70%",
+          start: "top 90%",
         },
       });
     }, sectionRef);
