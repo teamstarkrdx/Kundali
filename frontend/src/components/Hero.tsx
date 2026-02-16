@@ -111,7 +111,7 @@ export default function Hero() {
           
           <div className="hero-stat px-4 md:px-6 py-3 md:py-4 rounded-full border border-accent/30 bg-accent/5 backdrop-blur-sm">
             <span className="font-jetbrains text-[10px] md:text-xs text-text-muted tracking-wider">STATUS:</span>
-            <span className="font-satoshi text-sm md:text-lg text-accent ml-2 md:ml-3">AVAILABLE FOR WORK</span>
+            <span className="font-satoshi text-sm md:text-lg text-green-400 ml-2 md:ml-3">ACTIVE</span>
           </div>
         </div>
       </div>
