@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <span className="font-clash text-lg md:text-xl font-bold text-text-main">RK</span>
-          <span className="font-jetbrains text-[10px] md:text-xs text-text-muted">© 2024</span>
+          <span className="font-jetbrains text-[10px] md:text-xs text-text-muted">© 2026</span>
         </div>
 
         <div className="flex items-center">
