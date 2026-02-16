@@ -111,9 +111,11 @@ export default function About() {
                 <span className="font-jetbrains text-[10px] md:text-xs text-text-muted tracking-wider block mb-1">
                   OPERATIVE NAME
                 </span>
-                <span className="font-clash text-xl md:text-2xl font-bold text-text-main">
-                  RAJAT KURDEKAR
-                </span>
+                <div className="font-clash text-xl md:text-2xl font-bold text-text-main">
+                  <span>RAJAT</span>
+                  <span className="mx-2 md:mx-3"></span>
+                  <span>KURDEKAR</span>
+                </div>
               </div>
 
               <div>
@@ -152,7 +154,7 @@ export default function About() {
                 STATUS
               </span>
               <span className="font-satoshi text-sm md:text-base text-green-400">
-                AVAILABLE FOR WORK
+                ACTIVE
               </span>
             </div>
           </div>
@@ -170,22 +172,28 @@ export default function About() {
             </p>
           </div>
 
-          {/* Barcode */}
+          {/* Barcode - Professional style like reference */}
           <div className="flex flex-col items-center pt-4 md:pt-6 border-t border-line-color">
             <div className="w-full max-w-xs">
-              <div className="flex justify-center items-end gap-[1px] md:gap-[2px] h-12 md:h-16 mb-2">
-                {[3,1,2,3,1,2,1,3,2,1,3,1,2,3,1,2,1,3,2,1,3,1,2,3,1,2,1,3,2,1,3,1,2,3,1,2,1,3,2,1,3,1,2,1,3,2,1,3,1,2].map((width, i) => (
+              {/* Barcode lines */}
+              <div className="flex justify-center items-end h-14 md:h-20 mb-2">
+                {/* Barcode pattern matching reference style */}
+                {[
+                  2,1,3,1,2,1,1,3,2,1,2,1,3,1,1,2,3,1,2,1,1,3,1,2,1,3,2,1,1,2,
+                  3,1,2,1,1,2,1,3,2,1,3,1,2,1,1,3,1,2,3,1,2,1,1,2,3,1,2,1,3,2
+                ].map((width, i) => (
                   <div 
                     key={i} 
-                    className="bg-text-muted/60" 
+                    className="bg-text-main" 
                     style={{ 
-                      width: `${width * 1.5}px`, 
-                      height: `${40 + Math.random() * 12}px` 
+                      width: `${width}px`,
+                      height: '100%',
+                      marginRight: i % 4 === 3 ? '2px' : '1px',
                     }} 
                   />
                 ))}
               </div>
-              <span className="font-jetbrains text-xs md:text-sm text-text-muted tracking-[0.15em] md:tracking-[0.2em] block text-center">
+              <span className="font-jetbrains text-xs md:text-sm text-text-muted tracking-[0.2em] block text-center">
                 RAJATKURDEKAR
               </span>
             </div>
