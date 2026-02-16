@@ -106,14 +106,14 @@ export default function Hero() {
         <div className="w-32 h-1 bg-accent mt-6 origin-left" style={{ transform: "scaleX(1)" }} />
 
         <div className="flex flex-wrap gap-8 mt-16">
-          <div className="hero-stat border border-line-color px-6 py-4">
-            <span className="font-jetbrains text-xs text-text-muted tracking-wider block mb-1">LOC:</span>
-            <span className="font-satoshi text-lg text-text-main">Karnataka, India</span>
+          <div className="hero-stat px-6 py-4 rounded-full border border-line-color bg-window-bg/50 backdrop-blur-sm">
+            <span className="font-jetbrains text-xs text-text-muted tracking-wider">LOCATION:</span>
+            <span className="font-satoshi text-lg text-text-main ml-3">Karnataka, India</span>
           </div>
           
-          <div className="hero-stat border border-line-color px-6 py-4">
-            <span className="font-jetbrains text-xs text-text-muted tracking-wider block mb-1">STAT:</span>
-            <span className="font-satoshi text-lg text-accent">AVAILABLE</span>
+          <div className="hero-stat px-6 py-4 rounded-full border border-accent/30 bg-accent/5 backdrop-blur-sm">
+            <span className="font-jetbrains text-xs text-text-muted tracking-wider">STATUS:</span>
+            <span className="font-satoshi text-lg text-accent ml-3">AVAILABLE FOR WORK</span>
           </div>
         </div>
       </div>
