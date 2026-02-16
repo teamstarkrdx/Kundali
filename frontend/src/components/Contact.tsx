@@ -52,19 +52,6 @@ export default function Contact() {
           },
         });
       }
-
-      // Animate social links - start visible
-      gsap.from(".social-link", {
-        opacity: 0,
-        y: 30,
-        stagger: 0.1,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".social-links-container",
-          start: "top 90%",
-        },
-      });
     }, sectionRef);
 
     return () => ctx.revert();
