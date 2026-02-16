@@ -392,3 +392,52 @@ body {
   transform: translate(-50%, -50%);
   pointer-events: none;
 }
+
+/* Magnetic button effect */
+.magnetic-btn {
+  transition: transform 0.3s ease;
+}
+
+.magnetic-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Glow on hover */
+.glow-hover {
+  transition: box-shadow 0.3s ease;
+}
+
+.glow-hover:hover {
+  box-shadow: 0 0 30px var(--accent-glow);
+}
+
+/* Text truncation */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Mobile specific */
+@media (max-width: 768px) {
+  .font-clash {
+    word-break: break-word;
+  }
+  
+  .works-track {
+    gap: 1rem;
+  }
+}
