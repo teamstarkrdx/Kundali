@@ -99,10 +99,10 @@ export default function Contact() {
         </span>
 
         {/* Giant Heading */}
-        <div className="overflow-hidden mb-16">
+        <div className="overflow-hidden mb-12">
           <h2
             ref={headingRef}
-            className="font-clash text-[15vw] md:text-[12vw] font-bold text-text-main leading-none"
+            className="font-clash text-[12vw] md:text-[10vw] font-bold text-text-main leading-none"
           >
             LET&apos;S WORK
           </h2>
