@@ -53,17 +53,17 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     }
 
     if (percentage >= 100) {
-      // Exit animation
+      // Exit animation - faster transition
       setTimeout(() => {
         gsap.to(preloaderRef.current, {
           yPercent: -100,
-          duration: 0.8,
+          duration: 0.6,
           ease: "power3.inOut",
           onComplete: () => {
             onComplete();
           },
         });
-      }, 500);
+      }, 300);
     }
   }, [percentage, onComplete]);
 
