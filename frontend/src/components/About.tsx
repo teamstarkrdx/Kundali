@@ -77,13 +77,13 @@ export default function About() {
     >
       <div
         ref={cardRef}
-        className="id-card w-full max-w-2xl bg-id-bg border border-line-color relative overflow-hidden"
+        className="id-card w-full max-w-2xl bg-id-bg border border-line-color rounded-3xl relative overflow-hidden"
         style={{ perspective: "1000px" }}
       >
         <div className="scanlines" />
         
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent pointer-events-none rounded-3xl" />
 
         {/* Header */}
         <div className="border-b border-line-color p-6 flex items-center justify-between">
@@ -93,8 +93,8 @@ export default function About() {
               IDENTIFICATION CARD
             </span>
           </div>
-          <span className="font-jetbrains text-xs text-accent tracking-widest">
-            LEVEL 5
+          <span className="font-jetbrains text-xs text-accent tracking-widest px-3 py-1 rounded-full border border-accent/30">
+            02 // ABOUT
           </span>
         </div>
 
@@ -102,10 +102,12 @@ export default function About() {
         <div className="p-8">
           {/* Photo and Basic Info */}
           <div className="flex gap-8 mb-8">
-            <div className="w-32 h-40 bg-window-bg border border-line-color flex items-center justify-center overflow-hidden">
-              <div className="w-full h-full bg-gradient-to-br from-accent/20 to-transparent flex items-center justify-center">
-                <span className="font-clash text-4xl font-bold text-accent">RK</span>
-              </div>
+            <div className="w-32 h-40 rounded-2xl border border-line-color flex items-center justify-center overflow-hidden">
+              <img 
+                src="https://customer-assets.emergentagent.com/job_busy-hertz-1/artifacts/7vr93men_file_00000000aee47208ac9f013b1b56cb09.png"
+                alt="Rajat Kurdekar"
+                className="w-full h-full object-cover"
+              />
             </div>
 
             <div className="flex-1 space-y-4">
@@ -129,9 +131,9 @@ export default function About() {
             </div>
           </div>
 
-          {/* Info Rows */}
-          <div className="space-y-4 mb-8">
-            <div className="flex justify-between items-center py-3 border-b border-line-color">
+          {/* Info Rows - Rounded pill style */}
+          <div className="space-y-3 mb-8">
+            <div className="flex justify-between items-center py-3 px-5 rounded-full bg-window-bg/50 border border-line-color">
               <span className="font-jetbrains text-xs text-text-muted tracking-wider">
                 LOCATION
               </span>
@@ -140,28 +142,19 @@ export default function About() {
               </span>
             </div>
 
-            <div className="flex justify-between items-center py-3 border-b border-line-color">
-              <span className="font-jetbrains text-xs text-text-muted tracking-wider">
-                CLEARANCE
-              </span>
-              <span className="font-satoshi text-accent">
-                LEVEL 5
-              </span>
-            </div>
-
-            <div className="flex justify-between items-center py-3 border-b border-line-color">
+            <div className="flex justify-between items-center py-3 px-5 rounded-full bg-accent/5 border border-accent/20">
               <span className="font-jetbrains text-xs text-text-muted tracking-wider">
                 STATUS
               </span>
               <span className="font-satoshi text-green-400">
-                ACTIVE
+                AVAILABLE FOR WORK
               </span>
             </div>
           </div>
 
           {/* Bio */}
-          <div className="mb-8">
-            <span className="font-jetbrains text-xs text-text-muted tracking-wider block mb-3">
+          <div className="mb-8 p-5 rounded-2xl bg-window-bg/30 border border-line-color">
+            <span className="font-jetbrains text-xs text-accent tracking-wider block mb-3">
               BIO
             </span>
             <p className="font-satoshi text-sm text-text-muted leading-relaxed mb-3">
@@ -172,14 +165,26 @@ export default function About() {
             </p>
           </div>
 
-          {/* Barcode */}
+          {/* Barcode - Below name, without year */}
           <div className="flex flex-col items-center pt-6 border-t border-line-color">
-            <span className="font-barcode text-4xl text-text-main tracking-widest">
-              RAJATKURDEKAR2006
-            </span>
-            <span className="font-jetbrains text-xs text-text-muted mt-2">
-              RAJATKURDEKAR2006
-            </span>
+            <div className="w-full max-w-xs">
+              {/* SVG Barcode representation */}
+              <div className="flex justify-center items-end gap-[2px] h-16 mb-2">
+                {[3,1,2,3,1,2,1,3,2,1,3,1,2,3,1,2,1,3,2,1,3,1,2,3,1,2,1,3,2,1,3,1,2,3,1,2,1,3,2,1,3,1,2,1,3,2,1,3,1,2].map((width, i) => (
+                  <div 
+                    key={i} 
+                    className="bg-text-muted/60" 
+                    style={{ 
+                      width: `${width * 2}px`, 
+                      height: `${50 + Math.random() * 14}px` 
+                    }} 
+                  />
+                ))}
+              </div>
+              <span className="font-jetbrains text-sm text-text-muted tracking-[0.2em] block text-center">
+                RAJATKURDEKAR
+              </span>
+            </div>
           </div>
         </div>
       </div>
