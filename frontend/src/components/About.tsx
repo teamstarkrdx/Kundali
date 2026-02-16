@@ -111,10 +111,8 @@ export default function About() {
                 <span className="font-jetbrains text-[10px] md:text-xs text-text-muted tracking-wider block mb-1">
                   OPERATIVE NAME
                 </span>
-                <div className="font-clash text-xl md:text-2xl font-bold text-text-main">
-                  <span>RAJAT</span>
-                  <span className="mx-2 md:mx-3"></span>
-                  <span>KURDEKAR</span>
+                <div className="font-clash text-xl md:text-2xl font-bold text-text-main tracking-wide">
+                  RAJAT&nbsp;&nbsp;&nbsp;KURDEKAR
                 </div>
               </div>
 
