@@ -38,7 +38,7 @@ const projects: Project[] = [
   {
     title: "VibeOS",
     subtitle: "Interface System",
-    status: "V1.0 LAB",
+    status: "VERSION 1.0",
     statusColor: "#818CF8",
     description: "Experimental system-console UI architecture focused on immersive motion and high-performance layout systems.",
     tech: ["React", "GSAP", "Tailwind", "Figma"],
@@ -58,33 +58,34 @@ const projects: Project[] = [
 export default function Works() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const curtainLeftRef = useRef<HTMLDivElement>(null);
-  const curtainRightRef = useRef<HTMLDivElement>(null);
+  const doorLeftRef = useRef<HTMLDivElement>(null);
+  const doorRightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     const track = trackRef.current;
-    const curtainLeft = curtainLeftRef.current;
-    const curtainRight = curtainRightRef.current;
+    const doorLeft = doorLeftRef.current;
+    const doorRight = doorRightRef.current;
 
-    if (!section || !track || !curtainLeft || !curtainRight) return;
+    if (!section || !track || !doorLeft || !doorRight) return;
 
     const ctx = gsap.context(() => {
       // Get the total scroll distance
       const scrollWidth = track.scrollWidth - window.innerWidth;
 
-      // Curtain animation
-      const curtainTl = gsap.timeline({
+      // Door opening animation - starts closed (at center), opens outward
+      const doorTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: "+=200",
+          end: "+=300",
           scrub: 1,
         },
       });
 
-      curtainTl.to(curtainLeft, { xPercent: -100, ease: "power2.inOut" });
-      curtainTl.to(curtainRight, { xPercent: 100, ease: "power2.inOut" }, "<");
+      // Doors start at 0 (center/closed) and move outward
+      doorTl.to(doorLeft, { xPercent: -100, ease: "power2.inOut" });
+      doorTl.to(doorRight, { xPercent: 100, ease: "power2.inOut" }, "<");
 
       // Horizontal scroll
       gsap.to(track, {
@@ -99,6 +100,25 @@ export default function Works() {
           anticipatePin: 1,
         },
       });
+
+      // Animate project cards - B&W to color on scroll into view
+      const cards = document.querySelectorAll('.project-card-wrapper');
+      cards.forEach((card) => {
+        gsap.fromTo(card.querySelector('.project-image'), 
+          { filter: 'grayscale(100%) brightness(0.8)' },
+          {
+            filter: 'grayscale(0%) brightness(1)',
+            scrollTrigger: {
+              trigger: card,
+              start: "left 80%",
+              end: "left 30%",
+              scrub: 1,
+              horizontal: true,
+              containerAnimation: gsap.to(track, { x: -scrollWidth }),
+            },
+          }
+        );
+      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -111,12 +131,20 @@ export default function Works() {
       className="relative min-h-screen overflow-hidden"
       data-testid="works-section"
     >
-      {/* Curtain Panels */}
-      <div ref={curtainLeftRef} className="curtain-left flex items-center justify-center">
-        <span className="font-clash text-4xl md:text-6xl font-bold text-text-main">WORK</span>
+      {/* Door Panels - Start closed (touching in center) */}
+      <div 
+        ref={doorLeftRef} 
+        className="fixed top-0 left-0 w-1/2 h-full bg-bg z-[100] flex items-center justify-end pr-4 border-r border-line-color"
+        style={{ transform: 'translateX(0)' }}
+      >
+        <span className="font-clash text-6xl md:text-8xl font-bold text-text-main tracking-tighter">WORK</span>
       </div>
-      <div ref={curtainRightRef} className="curtain-right flex items-center justify-center">
-        <span className="font-clash text-4xl md:text-6xl font-bold text-text-main">FOLIO</span>
+      <div 
+        ref={doorRightRef} 
+        className="fixed top-0 right-0 w-1/2 h-full bg-bg z-[100] flex items-center justify-start pl-4 border-l border-line-color"
+        style={{ transform: 'translateX(0)' }}
+      >
+        <span className="font-clash text-6xl md:text-8xl font-bold text-accent tracking-tighter">FOLIO</span>
       </div>
 
       {/* Horizontal Track */}
@@ -127,8 +155,8 @@ export default function Works() {
         >
           {/* Section Header */}
           <div className="flex-shrink-0 w-[40vw] flex flex-col justify-center pr-12">
-            <span className="font-jetbrains text-xs text-text-muted tracking-widest mb-4">
-              [ SELECTED WORKS ]
+            <span className="font-jetbrains text-xs text-accent tracking-widest mb-4 px-4 py-2 rounded-full border border-accent/30 inline-block w-fit">
+              01 // SELECTED WORKS
             </span>
             <h2 className="font-clash text-5xl md:text-7xl font-bold text-text-main leading-tight">
               Featured<br />Projects
@@ -139,17 +167,18 @@ export default function Works() {
           {projects.map((project, index) => (
             <div
               key={index}
-              className="project-card flex-shrink-0 w-[400px] md:w-[450px] border border-line-color bg-card-bg overflow-hidden group transition-all duration-500"
+              className="project-card-wrapper flex-shrink-0 w-[400px] md:w-[450px] border border-line-color bg-card-bg rounded-2xl overflow-hidden group transition-all duration-500 hover:border-accent hover:shadow-[0_0_40px_rgba(219,255,0,0.15)]"
               data-testid={`project-card-${index}`}
             >
               <div className="relative h-48 md:h-56 overflow-hidden">
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="project-image w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                  style={{ filter: 'grayscale(100%) brightness(0.8)' }}
                 />
                 <div className="scanlines" />
-                <div className="absolute top-4 right-4 px-3 py-1 bg-black/60 backdrop-blur-sm">
+                <div className="absolute top-4 right-4 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-sm border border-white/10">
                   <span 
                     className="font-jetbrains text-xs tracking-wider"
                     style={{ color: project.statusColor }}
@@ -177,7 +206,7 @@ export default function Works() {
                   {project.tech.map((tech, techIndex) => (
                     <span
                       key={techIndex}
-                      className="font-jetbrains text-xs px-2 py-1 border border-line-color text-text-muted"
+                      className="font-jetbrains text-xs px-3 py-1.5 rounded-full border border-line-color text-text-muted bg-window-bg/50"
                     >
                       {tech}
                     </span>
@@ -189,7 +218,7 @@ export default function Works() {
 
           {/* Archive Card */}
           <div
-            className="flex-shrink-0 w-[350px] md:w-[400px] h-[500px] border border-line-color bg-card-bg flex flex-col items-center justify-center group relative overflow-hidden"
+            className="flex-shrink-0 w-[350px] md:w-[400px] h-[500px] border border-line-color bg-card-bg rounded-2xl flex flex-col items-center justify-center group relative overflow-hidden hover:border-accent transition-all duration-500"
             data-testid="archive-card"
           >
             <div className="archive-grid absolute inset-0 opacity-20">
@@ -203,7 +232,7 @@ export default function Works() {
               }} />
             </div>
 
-            <div className="archive-ring w-24 h-24 border border-accent rounded-full mb-8 flex items-center justify-center">
+            <div className="archive-ring w-24 h-24 border-2 border-accent rounded-full mb-8 flex items-center justify-center animate-spin" style={{ animationDuration: '10s' }}>
               <div className="w-16 h-16 border border-line-color rounded-full" />
             </div>
 
@@ -213,24 +242,12 @@ export default function Works() {
             <span className="font-jetbrains text-xs text-text-muted mt-2 tracking-wider">
               VIEW ALL PROJECTS
             </span>
-
-            {/* Vertical scan */}
-            <div className="absolute left-0 top-0 w-full h-1 bg-accent/30 animate-pulse" style={{
-              animation: "scanVertical 3s linear infinite",
-            }} />
           </div>
 
-          {/* Spacer for smooth scrolling end */}
+          {/* Spacer */}
           <div className="flex-shrink-0 w-[20vw]" />
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes scanVertical {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(500px); }
-        }
-      `}</style>
     </section>
   );
 }
