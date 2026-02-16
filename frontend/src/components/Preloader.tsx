@@ -26,16 +26,16 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     // Scramble text animation
     const wordInterval = setInterval(() => {
       setCurrentWord((prev) => (prev + 1) % scrambleWords.length);
-    }, 400);
+    }, 300);
 
-    // Random percentage increment
+    // Faster percentage increment for quicker load
     const percentInterval = setInterval(() => {
       setPercentage((prev) => {
-        const increment = Math.random() * 15 + 5;
+        const increment = Math.random() * 20 + 10;
         const newValue = Math.min(prev + increment, 100);
         return Math.round(newValue);
       });
-    }, 150);
+    }, 100);
 
     return () => {
       clearInterval(wordInterval);
