@@ -122,14 +122,17 @@ export default function Works() {
           ref={trackRef}
           className="works-track pl-4 md:pl-12 lg:pl-24"
         >
-          {/* Section Header */}
-          <div className="flex-shrink-0 w-[80vw] md:w-[40vw] flex flex-col justify-center pr-4 md:pr-12">
+          {/* Section Header - Visible on mobile */}
+          <div className="flex-shrink-0 w-[85vw] md:w-[40vw] flex flex-col justify-center pr-4 md:pr-12">
             <span className="font-jetbrains text-[10px] md:text-xs text-accent tracking-widest mb-3 md:mb-4 px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-accent/30 inline-block w-fit">
               01 // SELECTED WORKS
             </span>
-            <h2 className="font-clash text-4xl md:text-5xl lg:text-7xl font-bold text-text-main leading-tight">
+            <h2 className="font-clash text-3xl md:text-5xl lg:text-7xl font-bold text-text-main leading-tight">
               Featured<br />Projects
             </h2>
+            <p className="font-satoshi text-sm md:text-base text-text-muted mt-4 max-w-md">
+              A collection of projects I&apos;ve built, exploring AI, automation, and creative interfaces.
+            </p>
           </div>
 
           {/* Project Cards */}
@@ -189,7 +192,6 @@ export default function Works() {
             className="flex-shrink-0 w-[85vw] md:w-[350px] lg:w-[400px] h-[400px] md:h-[500px] border border-dashed border-line-color bg-card-bg/50 rounded-2xl flex flex-col items-center justify-center group relative overflow-hidden"
             data-testid="coming-soon-card"
           >
-            {/* Animated background */}
             <div className="absolute inset-0 opacity-10">
               <div className="w-full h-full" style={{
                 backgroundImage: `
@@ -200,7 +202,6 @@ export default function Works() {
               }} />
             </div>
 
-            {/* Pulsing dots */}
             <div className="flex gap-2 mb-6 md:mb-8">
               {[...Array(3)].map((_, i) => (
                 <div 
@@ -221,7 +222,6 @@ export default function Works() {
               EXCITING THINGS IN THE WORKS
             </span>
 
-            {/* Decorative lines */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-1">
               {[...Array(5)].map((_, i) => (
                 <div 
