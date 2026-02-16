@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 const scrambleWords = [
-  "INITIALIZING SYSTEMS",
+  "INITIALIZING",
   "LOADING ASSETS",
-  "COMPILING CODE",
-  "RENDERING UI",
+  "COMPILING",
+  "RENDERING",
   "OPTIMIZING",
-  "ALMOST THERE",
+  "LAUNCHING",
 ];
 
 interface PreloaderProps {
@@ -21,7 +21,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const [currentWord, setCurrentWord] = useState(0);
   const preloaderRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
-  const spinnerRef = useRef<HTMLDivElement>(null);
+  const barsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Scramble text animation
@@ -38,13 +38,18 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       });
     }, 100);
 
-    // Spinner animation
-    if (spinnerRef.current) {
-      gsap.to(spinnerRef.current, {
-        rotation: 360,
-        duration: 1,
-        repeat: -1,
-        ease: "linear",
+    // Animate loading bars
+    if (barsRef.current) {
+      const bars = barsRef.current.querySelectorAll('.loading-bar');
+      bars.forEach((bar, i) => {
+        gsap.to(bar, {
+          scaleY: Math.random() * 0.5 + 0.5,
+          duration: 0.3,
+          repeat: -1,
+          yoyo: true,
+          delay: i * 0.1,
+          ease: "power2.inOut",
+        });
       });
     }
 
@@ -83,50 +88,62 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       className="fixed inset-0 bg-bg z-[10001] flex flex-col items-center justify-center"
       data-testid="preloader"
     >
-      {/* Animated circles background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full border border-line-color opacity-20 animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full border border-accent/20 animate-ping" style={{ animationDuration: '3s' }} />
+      {/* Grid background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
+        <div className="w-full h-full" style={{
+          backgroundImage: `
+            linear-gradient(var(--line-color) 1px, transparent 1px),
+            linear-gradient(90deg, var(--line-color) 1px, transparent 1px)
+          `,
+          backgroundSize: "60px 60px",
+        }} />
       </div>
 
-      <div className="relative flex flex-col items-center gap-8">
-        {/* Spinning ring loader */}
-        <div className="relative w-32 h-32">
-          <div 
-            ref={spinnerRef}
-            className="absolute inset-0 rounded-full border-2 border-transparent border-t-accent border-r-accent/50"
-          />
-          <div className="absolute inset-2 rounded-full border border-line-color" />
-          <div className="absolute inset-4 rounded-full bg-window-bg flex items-center justify-center">
-            <span className="font-clash text-2xl font-bold text-accent">
-              {percentage}
-            </span>
-          </div>
+      <div className="relative flex flex-col items-center gap-6 px-4">
+        {/* Audio visualizer style loader */}
+        <div ref={barsRef} className="flex items-end gap-1 h-20 mb-4">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="loading-bar w-1 md:w-1.5 bg-accent origin-bottom"
+              style={{ 
+                height: '100%',
+                opacity: 0.3 + (i % 5) * 0.15,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Percentage display */}
+        <div className="flex items-baseline gap-2">
+          <span className="font-clash text-6xl md:text-8xl font-bold text-text-main">
+            {percentage}
+          </span>
+          <span className="font-clash text-2xl md:text-3xl font-bold text-accent">%</span>
         </div>
 
         {/* Status text */}
-        <div className="flex flex-col items-center gap-2">
-          <span className="font-jetbrains text-xs text-accent tracking-[0.3em]">
-            {scrambleWords[currentWord]}
-          </span>
-        </div>
+        <span className="font-jetbrains text-xs text-accent tracking-[0.3em]">
+          {scrambleWords[currentWord]}
+        </span>
 
-        {/* Progress bar - pill shaped */}
-        <div className="w-64 h-2 bg-window-bg rounded-full overflow-hidden">
+        {/* Progress bar */}
+        <div className="w-48 md:w-64 h-0.5 bg-line-color overflow-hidden">
           <div 
             ref={progressRef} 
-            className="h-full bg-gradient-to-r from-accent to-accent/70 rounded-full transition-all"
-            style={{ boxShadow: '0 0 20px var(--accent-glow)' }}
+            className="h-full bg-accent"
+            style={{ boxShadow: '0 0 10px var(--accent)' }}
           />
         </div>
 
         {/* Branding */}
-        <div className="mt-8 flex items-center gap-3">
-          <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-          <span className="font-clash text-sm text-text-muted tracking-wider">
+        <div className="mt-6 flex flex-col items-center gap-2">
+          <span className="font-clash text-lg md:text-xl font-bold text-text-main tracking-wider">
             RAJAT KURDEKAR
           </span>
-          <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+          <span className="font-jetbrains text-[10px] text-text-muted tracking-widest">
+            CREATIVE DEVELOPER
+          </span>
         </div>
       </div>
     </div>
